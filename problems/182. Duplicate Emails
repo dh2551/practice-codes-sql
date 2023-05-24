@@ -1,0 +1,18 @@
+# Write your MySQL query statement below
+
+select email from (select email,
+count(email) as cts
+from person 
+group by email
+) as ct 
+
+where cts > 1
+
+# or 
+
+select email 
+from person 
+group by email
+
+having count(email) > 1
+
