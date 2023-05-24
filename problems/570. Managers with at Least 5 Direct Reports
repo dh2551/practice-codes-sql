@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+
+select name 
+
+from (select e1.name as name
+
+from employee e1,
+employee e2 
+
+where e2.managerID = e1.id
+
+group by e1.name 
+having count(e1.name) >= 5) as cts
