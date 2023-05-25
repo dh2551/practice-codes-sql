@@ -1,0 +1,32 @@
+# Write your MySQL query statement below
+
+select department, employee, salary
+from (select d.name department,
+e.name employee,
+e.salary salary,
+dense_rank() over (partition by d.name order by e.salary desc ) ranks
+
+from employee e left join department d on e.departmentid = d.id
+) rankstb
+
+#order by ranks desc
+
+where ranks <= 3
+
+#or 
+# Write your MySQL query statement below
+
+with rankstb as (select d.name department,
+e.name employee,
+e.salary salary,
+dense_rank() over (partition by d.name order by e.salary desc ) ranks
+
+from employee e left join department d on e.departmentid = d.id
+)
+
+select department, employee, salary
+from rankstb
+
+#order by ranks desc
+
+where ranks <= 3
