@@ -1,0 +1,20 @@
+# Write your MySQL query statement below
+
+
+with cttb as (select #count(status="completed") tot,
+if(status = "completed",1,0) comp,
+request_at days
+
+from trips t left join (select * from users where role = "client") u on t.client_id = u.users_id 
+left join (select * from users where role = "driver") u1 on t.driver_id = u1.users_id
+
+where u1.banned ="No" AND 
+u.banned = "No" AND (request_at between '2013-10-01' and '2013-10-03' )
+)
+
+select 
+days `Day`,
+round((count(comp) - sum(comp))/count(comp), 2) `cancellation rate`
+from cttb
+
+group by days
